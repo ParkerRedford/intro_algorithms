@@ -1,9 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// The actual implementation in C for the matrix divide-and-conquer algorithm might be a little excessive for an intro algorithm
-
-
 int** square_matrix_multiply(int **a, int **b, int n) {
     int **c = (int**)malloc(n * sizeof(int*));
     for (int i = 0; n > i; i++) {
@@ -17,7 +14,6 @@ int** square_matrix_multiply(int **a, int **b, int n) {
     return c;
 }
 
-// Inefficient due to the overhead of malloc but works
 int** slice(int **a, int rows, int cols, int n) {
     int **c = (int**)malloc(n + sizeof(int*));
 
