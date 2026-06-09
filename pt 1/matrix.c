@@ -150,14 +150,9 @@ int main() {
 
     printf("\n");
 
-    for (int i = 0; i < 2; i++) {
-        free(c[i]);
-        free(a[i]);
-        free(b[i]);
-    }
-    free(a);
-    free(b);
-    free(c);
+    free_matrix(a, 2);
+    free_matrix(b, 2);
+    free_matrix(c, 2);
 
     getchar();
 }
