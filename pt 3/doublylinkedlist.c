@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-// Book represented nodes as arrays, but I'll use structs here
 typedef struct Node {
     int data;
     struct Node* next;

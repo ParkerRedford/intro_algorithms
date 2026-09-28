@@ -3,7 +3,7 @@
 typedef struct Node {
     int key;
 
-    struct Node* parent;
+    struct Node* p;
     struct Node* left;
     struct Node* right;
 } Node;
@@ -61,10 +61,10 @@ Node* tree_successor(Node* x) {
         return tree_minimum(x->right);
     }
 
-    Node* y = x->parent;
+    Node* y = x->p;
     while (y != NULL && x == y->right) {
         x = y;
-        y = y->parent;
+        y = y->p;
     }
 
     return y;
@@ -84,7 +84,7 @@ void tree_insert(Node** t, Node* z) {
         }
     }
 
-    z->parent = y;
+    z->p = y;
     if (y == NULL) {
         t[0] = z;
     }
@@ -96,17 +96,19 @@ void tree_insert(Node** t, Node* z) {
 }
 
 void transplant(Node** t, Node* u, Node* v) {
-    if (u->parent == NULL) {
+    if (u->p == NULL) {
         t[0] = v;
-    } else if (u == u->parent->left) {
-        u->parent->left = v;
+    } else if (u == u->p->left) {
+        u->p->left = v;
     } else {
-        u->parent->right = v;
+        u->p->right = v;
     }
 
     if (v != NULL) {
-        v->parent = u->parent;
+        v->p = u->p;
     }
+
+    free(u);
 }
 
 void tree_delete(Node** t, Node* z) {
@@ -116,16 +118,18 @@ void tree_delete(Node** t, Node* z) {
         transplant(t, z, z->left);
     } else {
         Node* y = tree_minimum(z->right);
-        if (y->parent != z) {
+        if (y->p != z) {
             transplant(t, y, y->right);
             y->right = z->right;
-            y->right->parent = y;
+            y->right->p = y;
         }
 
         transplant(t, z, y);
         y->left = z->left;
-        y->left->parent = y;
+        y->left->p = y;
     }
+
+    free(z);
 }
 
 int main() {
