@@ -1,1 +1,1 @@
-Core algorithms in C from the Intro to Algorithms book by CLRS.
+Core algorithms in C for the Intro to Algorithms book by CLRS.

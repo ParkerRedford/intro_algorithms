@@ -75,14 +75,16 @@ void rb_insert_fixup(Node** t, Node* z) {
                 y->color = black;
                 z->p->p->color = red;
                 z = z->p->p;
-            } else if (z == z->p->right) {
-                z = z->p;
-                left_rotate(t, z);
-            }
+            } else {
+                if (z == z->p->right) {
+                    z = z->p;
+                    left_rotate(t, z);
+                }
 
-            z->p->color = black;
-            z->p->p->color = red;
-            right_rotate(t, z->p->p);
+                z->p->color = black;
+                z->p->p->color = red;
+                right_rotate(t, z->p->p);
+            }
         } else {
             y = z->p->p->left;
 
@@ -91,14 +93,16 @@ void rb_insert_fixup(Node** t, Node* z) {
                 y->color = black;
                 z->p->p->color = red;
                 z = z->p->p;
-            } else if (z == z->p->left) {
-                z = z->p;
-                right_rotate(t, z);
-            }
+            } else {
+                if (z == z->p->left) {
+                    z = z->p;
+                    right_rotate(t, z);
+                }
 
-            z->p->color = black;
-            z->p->p->color = red;
-            left_rotate(t, z->p->p);
+                z->p->color = black;
+                z->p->p->color = red;
+                left_rotate(t, z->p->p);
+            }
         }
     }
 
@@ -200,18 +204,20 @@ void rb_delete_fixup(Node** t, Node* x) {
             if (w->left->color == black && w->right->color == black) {
                 w->color = red;
                 x = x->p;
-            } else if (w->right->color == black) {
-                w->left->color = black;
-                w->color = red;
-                right_rotate(t, w);
-                w = x->p->right;
-            }
+            } else {
+                if (w->right->color == black) {
+                    w->left->color = black;
+                    w->color = red;
+                    right_rotate(t, w);
+                    w = x->p->right;
+                }
 
-            w->color = x->p->color;
-            x->p->color = black;
-            w->right->color = black;
-            left_rotate(t, x->p);
-            x = t[0];
+                w->color = x->p->color;
+                x->p->color = black;
+                w->right->color = black;
+                left_rotate(t, x->p);
+                x = t[0];
+            }
         } else {
             Node* w = x->p->left;
             if (w->color == red) {
@@ -223,18 +229,20 @@ void rb_delete_fixup(Node** t, Node* x) {
             if (w->right->color == black && w->left->color == black) {
                 w->color = red;
                 x = x->p;
-            } else if (w->left->color == black) {
-                w->right->color = black;
-                w->color = red;
-                left_rotate(t, w);
-                w = x->p->left;
-            }
+            } else {
+                if (w->left->color == black) {
+                    w->right->color = black;
+                    w->color = red;
+                    left_rotate(t, w);
+                    w = x->p->left;
+                }
 
-            w->color = x->p->color;
-            x->p->color = black;
-            w->left->color = black;
-            right_rotate(t, x->p);
-            x = t[0];
+                w->color = x->p->color;
+                x->p->color = black;
+                w->left->color = black;
+                right_rotate(t, x->p);
+                x = t[0];
+            }
         }
     }
 
